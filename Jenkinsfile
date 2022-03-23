@@ -51,11 +51,11 @@ node{
 			{
 			unstash 'dfile'
 			unstash 'efile'
-			sh 'podman build -t quay.io/raj11222021/account-service:latest .'
+			sh 'podman build -t quay.io/tanvi23d/account-service:latest .'
 			withCredentials([usernamePassword(credentialsId: 'dockerid', passwordVariable: 'PWDD', usernameVariable: 'USER')]) {	
 			sh 'podman login quay.io -u $USER -p $PWDD'
 			}
-			sh 'podman image push quay.io/raj11222021/account-service:latest'
+			sh 'podman image push quay.io/tanvi23d/account-service:latest'
 			
 		       }
 	  }
