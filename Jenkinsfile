@@ -44,7 +44,23 @@ node{
 		stash includes: 'Dockerfile', name: 'dfile'
 		stash includes: 'target/', name: 'efile'
 	 }
-
-
 }
+	node('kubernetes'){
+   container('podman') {
+			stage('build')
+			{
+			unstash 'dfile'
+			unstash 'efile'
+			sh 'podman build -t quay.io/raj11222021/account-service:latest .'
+			withCredentials([usernamePassword(credentialsId: 'dockerid', passwordVariable: 'PWDD', usernameVariable: 'USER')]) {	
+			sh 'podman login quay.io -u $USER -p $PWDD'
+			}
+			sh 'podman image push quay.io/raj11222021/account-service:latest'
+			
+		       }
+	  }
+  }
+
+
+
 }
