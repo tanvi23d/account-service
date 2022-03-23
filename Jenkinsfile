@@ -1,3 +1,9 @@
+podTemplate(cloud: 'kubernetes',label: 'kubernetes',
+            containers: [
+                    containerTemplate(name: 'podman', image: 'quay.io/containers/podman', privileged: true, command: 'cat', ttyEnabled: true)
+					
+            ]) 
+{
 node{
     
     def MAVEN_HOME = tool "testmaven"
@@ -24,14 +30,21 @@ node{
     		}
 	 }
 	 
-	 stage("Quality Gate"){
+	 /*stage("Quality Gate"){
           timeout(time: 1, unit: 'HOURS') {
               def qg = waitForQualityGate()
               if (qg.status != 'OK') {
                   error "Pipeline aborted due to quality gate failure: ${qg.status}"
               }
           }
-      }
+      }*/
+	 stage('Code Build') 
+	{
+		sh 'mvn package'
+		stash includes: 'Dockerfile', name: 'dfile'
+		stash includes: 'target/', name: 'efile'
+	 }
 
 
+}
 }
