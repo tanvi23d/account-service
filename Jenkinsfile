@@ -23,7 +23,7 @@ node{
     
     stage('Code quality analysis') 
 	{
-		withSonarQubeEnv('sonarqube') 
+		withSonarQubeEnv('tanvisonar') 
 		{
                  sh 'mvn sonar:sonar -Dsonar.organization=tanvi23d -Dsonar.projectKey=account-service1'
 		
