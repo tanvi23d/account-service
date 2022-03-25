@@ -61,6 +61,13 @@ node('kubernetes'){
 	  }
   }
 
-
+node{
+		stage('Dev Deploy'){
+			
+			sh '/tmp/kubectl apply -f k8s/Deployment.yaml'
+			
+		}
+		
+	}
 
 }
