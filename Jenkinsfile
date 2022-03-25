@@ -52,7 +52,7 @@ node('kubernetes'){
 			unstash 'dfile'
 			unstash 'efile'
 			sh 'podman build -t quay.io/tanvi23d/account-service:latest .'
-			withCredentials([usernamePassword(credentialsId: 'dockerid', passwordVariable: 'PWDD', usernameVariable: 'USER')]) {	
+			withCredentials([usernamePassword(credentialsId: 'tanvidockerid', passwordVariable: 'PWDD', usernameVariable: 'USER')]) {	
 			sh 'podman login quay.io -u $USER -p $PWDD'
 			}
 			sh 'podman image push quay.io/tanvi23d/account-service:latest'
